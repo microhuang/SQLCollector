@@ -38,6 +38,7 @@ function read_auth()
     clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]=userinfo[2]
     --clientinfo[userinfo[2]]=1
     --print(userinfo[2])
+    proxy.global.clientinfo=clientinfo
 
     local protocol_41_default_capabilities = 8+512+ 32768  
                             --8 +     -- _CONNECT_WITH_DB  
