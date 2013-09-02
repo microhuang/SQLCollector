@@ -35,7 +35,7 @@ function read_auth()
     --local s = proxy.connection.server
 
     local userinfo=Split(proxy.connection.client.username,"|",2)
-    clientinfo[proxy.connection.client.username]=1
+    clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]=userinfo[2]
     --clientinfo[userinfo[2]]=1
     --print(userinfo[2])
 
@@ -53,10 +53,10 @@ return proxy.PROXY_SEND_QUERY
 end
 
 function disconnect_client()
-    --clientinfo[proxy.connection.client.username]=nil
+    --clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]=nil
     --print(proxy.connection.client.username)
     --print(clientinfo[proxy.connection.client.username])
-    --for k in pairs(clientinfo) do
-    --    print( k )
+    --for k,v in pairs(clientinfo) do
+    --    print( k,v )
     --end
 end
