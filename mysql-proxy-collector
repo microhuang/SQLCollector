@@ -29,6 +29,23 @@ local clientinfo={}
         return result
     end
 
+function read_query(packet)
+    local query = packet:sub(2)
+    if string.sub(query:lower(),1,9) == "comment--" then
+        local userinfo=Split(proxy.connection.client.username,"|",2)
+        --print(userinfo[2])
+        --print(string.sub(query:lower(),1,7))
+        proxy.response = {
+                type = proxy.MYSQLD_PACKET_OK,
+                resultset = {
+                        fields = {{name="id",type=proxy.MYSQL_TYPE_LONG}, {name="description",type=proxy.MYSQL_TYPE_STRING}},
+                        rows = {{1,userinfo[2]}}
+                }
+        }
+        return proxy.PROXY_SEND_RESULT
+    end
+end
+
 function read_auth()
     --split tag
     --local c = proxy.connection.client
