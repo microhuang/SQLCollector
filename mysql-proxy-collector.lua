@@ -38,8 +38,8 @@ function read_query(packet)
         proxy.response = {
                 type = proxy.MYSQLD_PACKET_OK,
                 resultset = {
-                        fields = {{name="id",type=proxy.MYSQL_TYPE_LONG}, {name="description",type=proxy.MYSQL_TYPE_STRING}},
-                        rows = {{1,userinfo[2]}}
+                        fields = {{name="id",type=proxy.MYSQL_TYPE_LONG}, {name="description",type=proxy.MYSQL_TYPE_STRING}, {name="time",type=proxy.MYSQL_TYPE_LONG}},
+                        rows = {{1,userinfo[2],os.time()}}
                 }
         }
         return proxy.PROXY_SEND_RESULT
