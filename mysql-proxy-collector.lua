@@ -33,8 +33,10 @@ function read_query(packet)
     local query = packet:sub(2)
     if string.sub(query:lower(),1,9) == "comment--" then
         local userinfo=Split(proxy.connection.client.username,"|",2)
+        clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]={userinfo[2],os.time()}
         --print(userinfo[2])
         --print(string.sub(query:lower(),1,7))
+        proxy.global.clientinfo=clientinfo
         proxy.response = {
                 type = proxy.MYSQLD_PACKET_OK,
                 resultset = {
@@ -52,7 +54,7 @@ function read_auth()
     --local s = proxy.connection.server
 
     local userinfo=Split(proxy.connection.client.username,"|",2)
-    clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]=userinfo[2]
+    clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]={userinfo[2],os.time()}
     --clientinfo[userinfo[2]]=1
     --print(userinfo[2])
     proxy.global.clientinfo=clientinfo
