@@ -8,6 +8,6 @@
 		--	}
 		for k,v in pairs(proxy.global.clientinfo) do
 			rows[#rows + 1] = {
-			    i,k,v,os.time()
+			    i,k,v[1],os.time()-v[2]
 			}
 		end
