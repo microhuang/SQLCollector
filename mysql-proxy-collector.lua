@@ -32,10 +32,11 @@ local clientinfo={}
 function read_query(packet)
     local query = packet:sub(2)
     if string.sub(query:lower(),1,9) == "comment--" then
-        local userinfo=Split(proxy.connection.client.username,"|",2)
-        clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]={userinfo[2],os.time()}
+        --local userinfo=Split(proxy.connection.client.username,"|",2)
+        --clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]={userinfo[2],os.time()}
         --print(userinfo[2])
         --print(string.sub(query:lower(),1,7))
+        clientinfo[proxy.connection.client.src.name .. proxy.connection.client.dst.name]=string.sub(query,10)
         proxy.global.clientinfo=clientinfo
         proxy.response = {
                 type = proxy.MYSQLD_PACKET_OK,
@@ -48,7 +49,7 @@ function read_query(packet)
     end
 end
 
-function read_auth()
+function ____read_auth()
     --split tag
     --local c = proxy.connection.client
     --local s = proxy.connection.server
@@ -73,6 +74,7 @@ return proxy.PROXY_SEND_QUERY
 end
 
 function disconnect_client()
+    clientinfo[proxy.connection.client.src.name .. proxy.connection.client.dst.name]=nil
     --clientinfo[proxy.connection.client.src.address..":"..proxy.connection.client.src.port]=nil
     --print(proxy.connection.client.username)
     --print(clientinfo[proxy.connection.client.username])
